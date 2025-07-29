@@ -1,0 +1,50 @@
+name: "Snowflake.CortexAI.AgentAction"
+description: "Execute a Snowflake Cortex Agent conversation"
+author: "Marcelino Jackson"
+branding:
+  icon: "message-square"
+  color: "blue"
+inputs:
+  agent-database:
+    description: "Database containing the agent (defaults to AGENT_DATABASE/SNOWFLAKE_DATABASE env)"
+    required: false
+  agent-schema:
+    description: "Schema containing the agent (defaults to AGENT_SCHEMA/SNOWFLAKE_SCHEMA env)"
+    required: false
+  agent-name:
+    description: "Agent object name"
+    required: true
+  message:
+    description: "Single natural-language message (ignored when messages input is provided)"
+    required: false
+  messages:
+    description: "JSON array of Cortex Agent messages"
+    required: false
+  thread-id:
+    description: "Optional integer thread identifier"
+    required: false
+  parent-message-id:
+    description: "Optional parent message id when continuing a thread"
+    required: false
+  tool-choice:
+    description: "JSON object describing tool selection strategy"
+    required: false
+  persist-results:
+    description: "Set to true to write the response JSON to disk instead of printing it"
+    required: false
+    default: "false"
+  persist-dir:
+    description: "Directory where persisted JSON files should be stored (defaults to RUNNER_TEMP)"
+    required: false
+outputs:
+  result-json:
+    description: "Stringified JSON response from the final agent event"
+  answer-text:
+    description: "First text segment extracted from the agent response"
+  events-json:
+    description: "All streamed events captured as JSON"
+  result-file:
+    description: "Path to the persisted response file when persist-results=true"
+runs:
+  using: "node20"
+  main: "dist/snowflake-cortex-agent.js"
